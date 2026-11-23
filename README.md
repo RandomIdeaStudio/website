@@ -1,6 +1,6 @@
 # Random Idea Studio – website
 
-The studio's public website: two static pages, one stylesheet and one font file. No JavaScript, no build step, no cookies, no analytics and nothing loaded from other servers, so there is nothing to update or maintain.
+The studio's public website: three static pages, one stylesheet and one font file. No JavaScript, no build step, no cookies, no analytics and nothing loaded from other servers, so there is nothing to update or maintain.
 
 ## Files
 
@@ -8,11 +8,12 @@ The studio's public website: two static pages, one stylesheet and one font file.
 |---|---|
 | `index.html` | The home page: the studio, how we work, the projects, contact and company details |
 | `privacy.html` | Privacy policy of the website |
-| `style.css` | All styles of both pages (dark by default, light when the system asks for it) |
+| `second-shift-manager-privacy.html` | Privacy policy of the Second Shift Manager app (Google sign-in and the stores link to it). Generated from the English section of `../SecondShiftManager/PRIVACY.md` with `scripts/app_privacy_page.py`; never edit it by hand, regenerate it whenever the app's policy changes |
+| `style.css` | All styles of the pages (dark by default, light when the system asks for it) |
 | `favicon.svg` | Browser tab icon (the studio mark) |
 | `fonts/nunito-800.woff` | Nunito ExtraBold for headings, a Latin subset made from `../Branding/fonts/Nunito.ttf`; licence in `fonts/OFL.txt` |
 | `.nojekyll` | Tells GitHub Pages to publish the files as they are |
-| `scripts/` | The check run before publishing (`test.ps1` / `test.sh` → `check_site.py`) |
+| `scripts/` | The check run before publishing (`test.ps1` / `test.sh` → `check_site.py`) and `app_privacy_page.py`, which makes an app's privacy page |
 
 Everything outside the table (README, scripts, CI) is also visible on the published site's repository, which is public; nothing secret belongs here.
 
