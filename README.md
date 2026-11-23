@@ -31,6 +31,12 @@ bash scripts/test.sh
 
 It fails when a page loads something from another server, has a script, links to a missing file or anchor, or still contains `PLACEHOLDER`. Commit and push; GitHub Pages republishes within a minute or two.
 
+## Where it runs today
+
+- Repository: RandomIdeaStudio/website (public), GitHub Pages from `main` / root.
+- Address: https://randomideastudio.com (www redirects to it), HTTPS enforced.
+- Domain: registered at WEDOS (Vedos brand) until 2027-11-23; its DNS records in the WEDOS administration: four `A` and four `AAAA` records of GitHub Pages on the apex and `www` as a `CNAME` to `randomideastudio.github.io`.
+
 ## Publish on GitHub Pages (once)
 
 GitHub Pages is free for public repositories.
