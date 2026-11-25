@@ -17,7 +17,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["index.html", "privacy.html", "second-shift-manager-privacy.html"]
+PAGES = ["index.html", "privacy.html", "second-shift-manager-privacy.html",
+         "second-shift-manager-terms.html", "second-shift-manager-delete-account.html"]
 REQUIRED = PAGES + ["style.css", "favicon.svg", "fonts/nunito-800.woff", "fonts/OFL.txt", ".nojekyll"]
 PUBLISHED_TEXT = PAGES + ["style.css", "favicon.svg"]
 EXTERNAL = re.compile(r"^(https?:)?//", re.IGNORECASE)
