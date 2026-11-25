@@ -9,11 +9,13 @@ The studio's public website: three static pages, one stylesheet and one font fil
 | `index.html` | The home page: the studio, how we work, the projects, contact and company details |
 | `privacy.html` | Privacy policy of the website |
 | `second-shift-manager-privacy.html` | Privacy policy of the Second Shift Manager app (Google sign-in and the stores link to it). Generated from the English section of `../SecondShiftManager/PRIVACY.md` with `scripts/app_privacy_page.py`; never edit it by hand, regenerate it whenever the app's policy changes |
+| `second-shift-manager-terms.html` | Terms of use of Second Shift Manager (Google Play's trader declaration links to it). Generated the same way from `../SecondShiftManager/TERMS.md` (`app_privacy_page.py ... terms`); never edit it by hand |
+| `second-shift-manager-delete-account.html` | How to delete a Second Shift Manager account (Google Play's data safety form links to it). Written by hand from the account deletion paragraph of the app's `PRIVACY.md`; update it when that paragraph or the app's menu path changes |
 | `style.css` | All styles of the pages (dark by default, light when the system asks for it) |
 | `favicon.svg` | Browser tab icon (the studio mark) |
 | `fonts/nunito-800.woff` | Nunito ExtraBold for headings, a Latin subset made from `../Branding/fonts/Nunito.ttf`; licence in `fonts/OFL.txt` |
 | `.nojekyll` | Tells GitHub Pages to publish the files as they are |
-| `scripts/` | The check run before publishing (`test.ps1` / `test.sh` → `check_site.py`) and `app_privacy_page.py`, which makes an app's privacy page |
+| `scripts/` | The check run before publishing (`test.ps1` / `test.sh` → `check_site.py`) and `app_privacy_page.py`, which makes an app's privacy and terms pages |
 
 Everything outside the table (README, scripts, CI) is also visible on the published site's repository, which is public; nothing secret belongs here.
 

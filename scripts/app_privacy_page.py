@@ -1,8 +1,10 @@
-"""Turns the English section of an app's PRIVACY.md into a page of the website.
+"""Turns the English section of an app's PRIVACY.md or TERMS.md into a page of the website.
 
-Run from the repository root whenever the app's policy changes, then commit the page:
+Run from the repository root whenever the app's document changes, then commit the page:
 python scripts/app_privacy_page.py ../SecondShiftManager/PRIVACY.md privacy.html second-shift-manager-privacy.html <contact e-mail>
-The contact e-mail must be the app's `privacyEmail` (lib/domain/legal_text.dart).
+python scripts/app_privacy_page.py ../SecondShiftManager/TERMS.md privacy.html second-shift-manager-terms.html <contact e-mail> terms
+The contact e-mail must be the app's `privacyEmail` (lib/domain/legal_text.dart). The optional
+fifth argument picks the document: `privacy` (the default) or `terms`.
 """
 import html
 import re
@@ -10,9 +12,18 @@ import sys
 from pathlib import Path
 
 src, template_page, out, email = Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3]), sys.argv[4]
+kind = sys.argv[5] if len(sys.argv) > 5 else "privacy"
+DOCS = {
+    "privacy": ("Privacy policy",
+                "How the Second Shift Manager app and its server handle personal data."),
+    "terms": ("Terms of use",
+              "The terms of use of the Second Shift Manager app and its server."),
+}
+title, description = DOCS[kind]
+
 text = src.read_text(encoding="utf-8")
 text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
-english = text.split("## English", 1)[1].split("\n---", 1)[0]
+english = text.split("## English", 1)[1].split("\n---", 1)[0].split("\n## ", 1)[0]
 english = english.replace("{{PRIVACY_EMAIL}}", email)
 
 
@@ -31,14 +42,14 @@ lst = None
 for line in english.strip().splitlines():
     line = line.rstrip()
     m_ul, m_ol = re.match(r"^- (.*)", line), re.match(r"^\d+\. (.*)", line)
-    kind = "ul" if m_ul else "ol" if m_ol else None
-    if lst and kind != lst:
+    kind_of_list = "ul" if m_ul else "ol" if m_ol else None
+    if lst and kind_of_list != lst:
         body.append(f"</{lst}>")
         lst = None
-    if kind:
+    if kind_of_list:
         if not lst:
-            body.append(f"<{kind}>")
-            lst = kind
+            body.append(f"<{kind_of_list}>")
+            lst = kind_of_list
         body.append(f"<li>{inline((m_ul or m_ol).group(1))}</li>")
     elif not line:
         continue
@@ -57,14 +68,14 @@ page = template_page.read_text(encoding="utf-8")
 head, rest = page.split('<div class="prose">', 1)
 _, tail = rest.split("</div>\n  </div>\n</main>", 1)
 head = head.replace("<title>Privacy policy · Random Idea Studio</title>",
-                    "<title>Privacy policy of Second Shift Manager · Random Idea Studio</title>")
+                    f"<title>{title} of Second Shift Manager · Random Idea Studio</title>")
 head = re.sub(r'<meta name="description" content="[^"]*">',
-              '<meta name="description" content="How the Second Shift Manager app and its server handle personal data.">', head)
+              f'<meta name="description" content="{description}">', head)
 indent = "      "
 content = [
     '<p class="eyebrow">Second Shift Manager</p>',
-    "<h1>Privacy policy</h1>",
-    f"<p>{html.escape(version)}. The same policy is shown in the app (Settings → About).</p>",
+    f"<h1>{title}</h1>",
+    f"<p>{html.escape(version)}. The same text is shown in the app (Settings → About).</p>",
 ] + body
 out.write_text(head + '<div class="prose">\n' + "\n".join(indent + c for c in content) + "\n    </div>\n  </div>\n</main>" + tail,
                encoding="utf-8", newline="\n")
